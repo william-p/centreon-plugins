@@ -146,6 +146,18 @@ sub run {
                                     short_msg => $output);
     }
 
+    if (exists $webcontent->{lastvalues}->{httptime}) {
+        my $perfdata = $webcontent->{lastvalues}->{httptime};
+
+        foreach my $location (keys $perfdata) { 
+            $self->{output}->perfdata_add(label => $location,
+              value => $perfdata->{$location},
+              unit => 'ms',
+              min => 0
+            );
+        }
+    }
+
     $self->{output}->display();
     $self->{output}->exit();
 
